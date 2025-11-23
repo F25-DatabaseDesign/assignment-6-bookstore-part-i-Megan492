@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <div id="mainLeft">
+        <!-- Welcome text -->
+        <h1 class="welcomeText">Asia History Bookstore</h1>
+        <p class="welcomeText">Browse books on the histories of China, Japan, Korea, and India.</p>
+        <p class="welcomeText">Choose a country on the right or use the search bar above.</p>
+        <p class="welcomeText">Click a cover to see all books in that category.</p>
+    </div>
+
+    <div id='mainRight'>
+        <h1>Shop by category:</h1>
+        <div id='categorySelections'>
+            <!-- Loop through the list of categories -->
+            {% for category in categories %}
+                <div class='category'>
+                    <!-- Text link with categoryId as URL parameter -->
+                    <p>
+                        <a href="{{ url_for('category', categoryId=category[0]) }}">
+                            {{ category[1] }}
+                        </a>
+                    </p>
+
+                    <!-- Image link with categoryId as URL parameter
+                         Assumes images like China.png, Japan.png, etc.
+                         stored in static/images/categories/ -->
+                    <a href="{{ url_for('category', categoryId=category[0]) }}">
+                        <img
+                            src="{{ url_for('static',
+                                filename='images/categories/' ~ category[1] ~ '.jpg') }}"
+                            alt="{{ category[1] }}"
+                        >
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
+

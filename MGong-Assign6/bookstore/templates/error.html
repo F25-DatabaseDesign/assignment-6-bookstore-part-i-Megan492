@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main id="errorPage">
+    <h2>Uh oh!</h2>
+
+    <p>Unfortunately, it seems that we have encountered an error…</p>
+    <p>
+        You can try going back to the
+        <a href="{{ url_for('home') }}">home page</a>.
+    </p>
+
+    <code>{{ error }}</code>
+</main>
+{% endblock %}

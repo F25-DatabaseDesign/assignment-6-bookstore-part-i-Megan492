@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<main>
+    <section id="catLeft">
+        <!-- List all categories, highlight the selected one -->
+        {% for category in categories %}
+            {% if selectedCategory is not none and selectedCategory == category[0] %}
+                <!-- Selected category -->
+                <p class="selectedCategory">{{ category[1] }}</p>
+            {% else %}
+                <!-- Not selected: link to that category -->
+                <p class="notSelectedCategory">
+                    <a href="{{ url_for('category', categoryId=category[0]) }}">
+                        {{ category[1] }}
+                    </a>
+                </p>
+            {% endif %}
+        {% endfor %}
+    </section>
+
+    <section id="catRight">
+        <!-- Loop through the list of books passed in -->
+        {% for book in books %}
+            <div class="book">
+                <!-- Book image from static folder, book title as alt text -->
+                <div>
+                    <img src="{{ url_for('static', filename='images/books/' ~ book[6]) }}"
+                         alt="{{ book[2] }}" />
+                </div>
+                <div class="bookDetailBox">
+                    <!-- Book details -->
+                    <p class="bookTitle">{{ book[2] }}</p>              <!-- title -->
+                    <p class="bookDetail">by {{ book[3] }}</p>          <!-- author -->
+                    <p class="bookDetail">ISBN: {{ book[4] }}</p>       <!-- isbn -->
+                    <p class="bookPrice">${{ "%.2f"|format(book[5]) }}</p> <!-- price -->
+                    <a class="actionButton" href="#">Add to cart</a>
+
+                    <!-- Read Now button only if readNow flag (index 7) is 1 -->
+                    {% if book[7] == 1 %}
+                        <a class="actionButton" href="#">Read Now</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}
